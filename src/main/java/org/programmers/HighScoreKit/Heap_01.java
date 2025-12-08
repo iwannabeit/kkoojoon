@@ -11,6 +11,66 @@ public class Heap_01 {
         System.out.println(Arrays.toString(result));
     }
 
+    public static int solution(int[] scoville, int K){
+        Minheap minheap = new Minheap();
+        int[] scovilleHeap = {};
+        for(int i=0; i<scoville.length; i++){
+            minheap.insert(i, scovilleHeap);
+        }
+    }
+
+}
+
+class Minheap{
+    public int[] insert(int value, int[] arry){
+        //heap 새로 생성
+        int[] heap = arry;
+        heap[0] = 0;
+
+        int idx = heap.length-1;
+
+        while(idx != 1 && value < heap[idx/2]){
+            heap[idx] = heap[idx/2];
+
+            idx = idx/2;
+        }
+        heap[idx] = value;
+        return heap;
+    }
+
+    public int[] delete(int[] arry){
+        //heap 새로 생성
+        int[] heap = new int[arry.length+1];
+        heap[0] = 0;
+        //복사
+        for(int i=0; i<arry.length; i++){
+            heap[i+1] = arry[i];
+        }
+
+        // 마지막 자식을 루트로(최대값 삭제)
+        heap[1] = heap[heap.length-1];
+        heap[heap.length-1] = 0;
+
+
+        for(int i=1; 2*i<heap.length; i++){
+            if(heap[i] < heap[2*i] && heap[i] < heap[2*i+1]){
+                break;
+            }
+            //왼쪽 자식 노드 보다 크면 바꾸기
+            else if(heap[i] > heap[2*i]){
+                int tmp = heap[i];
+                heap[i] = heap[2*i];
+                heap[2*i] = tmp;
+            }
+            else if( heap[i] > heap[2*i+1]){
+                int tmp = heap[i];
+                heap[i] = heap[2*i+1];
+                heap[2*i+1] = tmp;
+            }
+        }
+
+        return heap;
+    }
 }
 
 class Maxheap{
