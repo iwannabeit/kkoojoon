@@ -33,4 +33,31 @@ class Minheap{
         heap[idx] = value;
         return heap; 
     }
-}
+
+    public int[] delete(int[] arry){
+        //heap 새로 생성
+        int[] heap = new int[arry.length+1];
+        heap[0] = 0;
+        //복사
+        for(int i=0; i<arry.length; i++){
+            heap[i+1] = arry[i];
+        }
+        
+        //루트노드 삭제(최대값 삭제)
+        heap[heap.length-1] = 0;
+        heap[1] = heap[heap.length-1];
+
+        
+        for(int i=1; i<heap.length; i++){
+            if(heap[i] < heap[2*i]){
+                int tmp = heap[i];
+                heap[i] = heap[2*i];
+            }
+            else if( heap[i] < heap[2*i+1]){
+
+            }
+        }
+
+        return heap;
+    }
+ }
