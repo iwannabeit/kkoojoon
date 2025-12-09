@@ -9,42 +9,36 @@ public class Heap_01 {
 //        int[] result = maxheap.insert(8, new int[]{9,7,6,5,4,3,2,2,1,3});
         // int[] result = maxheap.delete(new int[]{9,7,6,5,4,3,2,2,1,3});
         // System.out.println(Arrays.toString(result));
-        int answer = solution(new int[]{1, 1, 1,1,1,1}, 50);
-        System.out.println(answer);
+        int[] answer = solution(new int[]{1, 2, 3,9,10,12}, 50);
+        // System.out.println(answer);
     }
 
-    public static int solution(int[] scoville, int K){
-        //정렬
-        Arrays.sort(scoville);
+    public static int[] solution(int[] scoville, int K){
+        Minheap minheap = new Minheap();
+        //heap으로 만들기 위한 배열 복사
+        int[] heap = new int[scoville.length+1];
+        heap[0] = 0;
+        
+        // for(int i=0; i<scoville.length; i++){
+        //     heap[i+1] = scoville[i];
+        // }
 
-        int i=0;
-        int trial =0;
-
-        while(scoville[i]<K && i<scoville.length){
-            if(scoville[i] >= K){
-                break;
-            } else if(i==scoville.length-1 && scoville[scoville.length-1] < K){
-                return -1;
-            }
-            int mix = scoville[i]+(scoville[i+1]*2);
-            scoville[i] = 0;
-            i++;
-            scoville[i] = mix;
-            Arrays.sort(scoville);
-            trial++;
+        for(int j=0; j<scoville.length; j++){
+            minheap.insert(scoville[j], heap);
         }
 
-        return trial;
+        return heap;
     }
 
 }
 
 class Minheap{
-    public int[] insert(int value, int[] arry){
-        //heap 새로 생성
-        int[] heap = arry;
-        heap[0] = 0;
+    public int[] insert(int value, int[] heap){
 
+        if(heap[1] == 1){
+            heap[1] = value;
+            return heap;
+        }
         int idx = heap.length-1;
 
         while(idx != 1 && value < heap[idx/2]){
