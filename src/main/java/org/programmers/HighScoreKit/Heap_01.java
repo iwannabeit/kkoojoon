@@ -7,16 +7,34 @@ public class Heap_01 {
         Maxheap maxheap = new Maxheap();
 
 //        int[] result = maxheap.insert(8, new int[]{9,7,6,5,4,3,2,2,1,3});
-        int[] result = maxheap.delete(new int[]{9,7,6,5,4,3,2,2,1,3});
-        System.out.println(Arrays.toString(result));
+        // int[] result = maxheap.delete(new int[]{9,7,6,5,4,3,2,2,1,3});
+        // System.out.println(Arrays.toString(result));
+        int answer = solution(new int[]{1, 1, 1,1,1,1}, 50);
+        System.out.println(answer);
     }
 
     public static int solution(int[] scoville, int K){
-        Minheap minheap = new Minheap();
-        int[] scovilleHeap = {};
-        for(int i=0; i<scoville.length; i++){
-            minheap.insert(i, scovilleHeap);
+        //정렬
+        Arrays.sort(scoville);
+
+        int i=0;
+        int trial =0;
+
+        while(scoville[i]<K && i<scoville.length){
+            if(scoville[i] >= K){
+                break;
+            } else if(i==scoville.length-1 && scoville[scoville.length-1] < K){
+                return -1;
+            }
+            int mix = scoville[i]+(scoville[i+1]*2);
+            scoville[i] = 0;
+            i++;
+            scoville[i] = mix;
+            Arrays.sort(scoville);
+            trial++;
         }
+
+        return trial;
     }
 
 }
