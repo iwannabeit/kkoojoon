@@ -3,38 +3,33 @@ package org.programmers.HighScoreKit;
 import java.util.*;
 
 public class BfsDfs_01 {
-    static int[][] graph = {{}, {2,3,8}, {1,6,8}, {1,5}, {5,7}, {3,4,7}, {2}, {4,5}, {1,2}};
-    static boolean[] visited = new boolean[graph.length];
+    static int numDepth;
+    static int targetNum;
+    static int cnt = 0;
+    static int[] numbers;
     public static void main(String[] args){
-        // DFS(1);
-        BFS(1);
+        System.out.println(solution(new int[]{1,1,1,1,1}, 3));
     }
-    static void DFS(int nodeIdx){
-        visited[nodeIdx] = true;
-        System.out.print(nodeIdx+"->");
-        for(int node: graph[nodeIdx]){
-            //인접노드가 방문한 적이 없다면 재귀
-            if(!visited[node]){
-                DFS(node);
+
+    static int solution(int[] number, int target){
+        targetNum = target;
+        numbers = number;
+        numDepth = numbers.length;
+        dfs(0,0);
+        return cnt;
+    }
+    
+    static void dfs(int depth, int sum){
+        if(depth == numDepth){
+            if(sum == targetNum){
+                cnt++;
             }
+            return;
         }
+
+        dfs(depth+1, sum+numbers[depth]);
+        dfs(depth+1, sum-numbers[depth]);
+
     }
-    static void BFS(int start){
-        Queue<Integer> q = new LinkedList<Integer>();
-        //첫번째 삽입
-        q.offer(start);
-        //방문 체크
-        visited[start] = true;
-        while(!q.isEmpty()){
-            int nodeIdx = q.poll();
-            System.out.print(nodeIdx+"->");
-            for(int i=0; i<graph[nodeIdx].length; i++){
-                int tmp = graph[nodeIdx][i];
-                if(!visited[tmp]){
-                    visited[tmp] = true;
-                    q.offer(tmp);
-                }
-            }
-        }
-    }
+
 }
