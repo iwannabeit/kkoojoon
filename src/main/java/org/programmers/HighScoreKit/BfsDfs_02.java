@@ -4,11 +4,33 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class BfsDfs_02 {
+    static int answer = 0;
     public static void main(String[] args) {
-        System.out.println(solution(3, new int[][]{{1,0,0},{0,1,1},{0,1,1}}));
+        System.out.println(solution(3, new int[][]{{1,1,1},{1,1,1},{1,1,1}}));
+    }
+    
+    static int solution(int n, int[][] computers){
+        boolean[] visited = new boolean[computers.length];
+        answer = computers.length;
+        for(int start=0; start<computers.length; start++){
+            if(visited[start]) continue;
+            dfs(start, visited, computers);
+        }
+        return answer;
     }
 
-    static int solution(int n, int[][] computers){
+    static void dfs(int idx, boolean[] visited, int[][] computers){
+        visited[idx] = true;
+
+        for(int i=0; i<computers[idx].length; i++){
+            if(computers[idx][i] == 1 && !visited[i]){
+                answer -= 1;
+                dfs(i, visited, computers);
+            }
+        }
+    }
+
+    static int bfs(int n, int[][] computers){
         int answer = n;
         Queue<Integer> q = new LinkedList<>();
         boolean[] visited = new boolean[computers.length];
@@ -35,6 +57,7 @@ public class BfsDfs_02 {
         }
 
         return answer;
+
     }
 
     
