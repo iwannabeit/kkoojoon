@@ -4,22 +4,22 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class BfsDfs_03 {
+    static int cnt = 1;
     public static void main(String[] args){
         
+        solution(new int[][]{ {1,0,1,1,1},{1,0,1,0,1},{1,0,1,1,1},{1,1,1,0,1},{0,0,0,0,1}});
     }
 
     static int solution(int[][] maps){
-        int answer = 0;
         boolean[][] visited = new boolean[maps.length][maps.length];
         int[] dx = {-1, 1, 0, 0};
         int[] dy = {0, 0, -1, 1};
-        bfs(dx, dy, visited, maps);
-        
-
+        int answer = bfs(dx, dy, visited, maps);
+    
         return answer;
     }
 
-    static void bfs(int[] dx, int[] dy, boolean[][] visited, int[][] maps){
+    static int bfs(int[] dx, int[] dy, boolean[][] visited, int[][] maps){
         Queue<int[]> q = new LinkedList<>();
         q.offer(new int[]{0, 0});
         visited[0][0] = true;
@@ -37,13 +37,20 @@ public class BfsDfs_03 {
                 if(nx < 0 || ny < 0 || nx >= maps.length || ny >= maps.length)
                     continue;
                 //방문 check , map 조건 check 
-                if(!visited[nx][ny] && maps[nx][ny] == 0){
+                if(!visited[nx][ny] && maps[nx][ny] == 1){
                     visited[nx][ny] = true;
                     q.offer(new int[]{nx, ny});
+                    cnt += 1;
+                    if(visited[maps.length][maps.length]){
+                        return cnt;
+                    }
                 }
 
             }
         }
-        
+        if(!visited[maps.length][maps.length]){
+            return -1;
+        }
+        return -1;
     }
 }
