@@ -35,19 +35,18 @@ public class _1012 {
                 map[cabY][cabX] = 1;
             }
 
-            System.out.println(Arrays.deepToString(map));
-            int x=0, y=0; 
-            
-            for(int k=0; k<4; k++){
-                int nx = x+dx[k];
-                int ny = y+dy[k];
-                System.out.print(nx+" "+ny+" ");
+            System.out.println(Arrays.deepToString(map)); 
 
-                if(nx<0 || ny < 0 || nx > map[1].length || ny > map[0].length){continue;}
+            for(int y=0; y<N; y++){
+                for(int x=0; x<M; x++){
+                    if(visited[y][x]){continue;}
+                    // System.out.print(y+" "+x+" ");
 
-                if(!visited[nx][ny] && map[nx][ny] == 1){
-                    dfs(nx, ny);
-                    cnt++;
+                    if(!visited[y][x] && map[y][x] == 1){
+                        dfs(x, y, N, M);
+                        cnt++;
+                    }
+                    visited[y][x] = true;
                 }
             }
             System.out.println(cnt);
@@ -55,17 +54,17 @@ public class _1012 {
         
     }
 
-    static void dfs(int x, int y){
-        visited[x][y] = true;
+    static void dfs(int x, int y, int N, int M){
+        visited[y][x] = true;
         for(int i=0; i<4; i++){
                 int nx = x+dx[i];
                 int ny = y+dy[i];
 
-                if(nx<0 || ny < 0 || nx > map[1].length || ny > map[0].length){continue;}
+                if(nx<0 || ny < 0 || nx >= M || ny >= N){continue;}
 
                 if(!visited[nx][ny] && map[nx][ny] == 1){
-                    System.out.print(nx+" "+ny+" ");
-                    dfs(nx, ny);
+                    System.out.println(nx+" "+ny+" ");
+                    dfs(nx, ny, N, M);
                 }
             }
         
