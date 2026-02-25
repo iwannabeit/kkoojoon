@@ -6,40 +6,44 @@ public class BfsDfs_04 {
   // static int[] visited;
   
   public static void main(String[] args){
-    solution("hit", "cog", new String[] {"hot", "dot", "dog", "lot", "log", "cog"});
+    int answer = 0;
+    answer = solution("hit", "cog", new String[] {"hot", "dot", "dog", "lot", "log", "cog"});
+    System.out.print(answer);
   }
 
   static int solution(String begin, String target, String[] words) {
-        Queue<String> q = new LinkedList();
+        Queue<String> q = new LinkedList<String>();
         boolean[] visited = new boolean[words.length];
+        Queue<Integer> depthQ = new LinkedList<Integer>();
 
         int diffCnt = 0;      
-        int answer = 0;
         String nxtWord = "";
         
         q.offer(begin);
+        depthQ.offer(0);
         
         while(!q.isEmpty()){
           nxtWord = q.poll();
+          int depth = depthQ.poll();
           if(nxtWord.equals(target)){
-            break;
+            return depth;
           }
           for(int i=0; i<words.length; i++){
             if(visited[i]){ continue;}
             for(int j=0; j<begin.length(); j++){
-              if(words[i].charAt(j) == nxtWord.charAt(j)){
+              if(words[i].charAt(j) != nxtWord.charAt(j)){
                 diffCnt++;
               }
             }
 
-            if(diffCnt == 2){
+            if(diffCnt == 1){
               q.offer(words[i]);
               visited[i] = true;
-              answer++;
+              depthQ.offer(depth+1);
             }
             diffCnt=0;
           }
         }
-        return answer;
+        return 0;
     }
 }
