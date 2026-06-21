@@ -8,7 +8,6 @@ public class DP_01 {
   } 
   
   private static int solution(int N, int num){
-    int min = 0;
     int repeat = 0;
     Set<Integer>[] dp = new HashSet[9];
 
@@ -19,23 +18,27 @@ public class DP_01 {
     }
     //한 번에 나오는 경우
     dp[1].add(N);
-    if(dp[1].equals(num)) return 1;
+    if(dp[1].contains(num)) return 1;
 
     //그 이상
     for(int i=2; i<9; i++){
-
-      for(int val: dp[i-1]){
-        dp[i].add(val+N);
-        dp[i].add(val*N);
-        dp[i].add(val-N);
-        dp[i].add(N-val);
-        if(N!=0)
-          dp[i].add(val/N);
-        if(val!=0)
-          dp[i].add(N/val);
+      // i개를 j개 + (i-j)개로 나눈다
+      for(int j=1; j<i; j++){
+        for(int a: dp[j]){
+          for(int b: dp[i-j]){
+            dp[i].add(a+b);
+            dp[i].add(a-b);
+            dp[i].add(a*b);
+            if(b!=0){
+              dp[i].add(a/b);
+            }
+          }
+        }
       }
+
+      if(dp[i].contains(num)) return i;
     }
 
-    return min;
+    return -1;
   }
 }
