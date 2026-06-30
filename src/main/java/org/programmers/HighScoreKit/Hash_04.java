@@ -4,50 +4,29 @@ import java.util.*;
 
 public class Hash_04 {
 
-  static List<String> selected = new ArrayList<>();
-  static Map<String, ArrayList<String>> map = new HashMap<>();
-  static List<String> keys;
+  static Map<String, Integer> map = new HashMap<>();
   static int answer = 0;
-  
-    public static void main(String[] args) {
+  public static void main(String[] args) {
     solution(new String[][]{{"yellow_hat", "headgear"},{"blue_sunglasses", "eyewear"},{"green_turban", "headgear"}});
-
   }
 
   static int solution(String[][] clothes){
-
+      int answer = 1;
       for(String[] clothe: clothes){
-          map.putIfAbsent(clothe[1], new ArrayList<>());
-          map.get(clothe[1]).add(clothe[0]);
+          //key 있으면 해당 key 의 value + 1
+          if(map.containsKey(clothe[1])){
+            map.put(clothe[1], map.get(clothe[1])+1);
+          } else{
+            map.put(clothe[1], 2);
+          }
       }
-      System.out.println(map);
-      keys = new ArrayList<>(map.keySet());
 
-      for (int r = 1; r <= map.size(); r++) {
-            combination(0, r);
-        }
+      for(int value: map.values()){
+        answer *= value;
+      }
 
-
-    return answer;
+      System.out.println(answer-1);
+    return answer-1;
   }
-  
-  static void combination(int start, int r) {
-        if (selected.size() == r) {
-            System.out.println(selected);
-            int cnt = 1;
-
-            for(String selectKey : selected){
-              cnt *= map.get(selectKey).size();
-            }
-            answer += cnt;
-            return;
-        }
-
-        for (int i=start; i < map.size(); i++) {
-            selected.add(keys.get(i));
-            combination(i + 1, r);
-            selected.remove(selected.size() - 1);
-        }
-    }
   
 }
